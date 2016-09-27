@@ -130,7 +130,6 @@ void Si4705::setHiCut_Off (int maxFreq, int Freq, int SNRHigh, int SNRLow)
 *******************************************************/
 void Si4705::setFMDeemph (int Deemphasis)
 {
-	
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
 	Wire.write(setProperty2);
@@ -147,7 +146,6 @@ void Si4705::setFMDeemph (int Deemphasis)
 *******************************************************/
 void Si4705::setAntenna (int FM_ANTENNA)
 {
-	
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
 	Wire.write(setProperty2);
@@ -254,43 +252,43 @@ void Si4705::setSNC (int StereoThreshold, int MonoThreshold, int StereoSNR, int 
 {
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
-    Wire.write(setProperty2);
+    	Wire.write(setProperty2);
 	Wire.write(StMoRSSIProperty);
 	Wire.write(SterRSSIProperty1);
 	Wire.write(SterRSSIProperty2);
 	Wire.write(StereoThreshold);
-    Wire.endTransmission();
-    delay(10);
+    	Wire.endTransmission();
+    	delay(10);
    
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
-    Wire.write(setProperty2);
+    	Wire.write(setProperty2);
 	Wire.write(StMoRSSIProperty);
 	Wire.write(MonoRSSIProperty1);
 	Wire.write(SterRSSIProperty2);
 	Wire.write(MonoThreshold);
 	Wire.endTransmission();
-    delay(10);
+    	delay(10);
 	
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
-    Wire.write(setProperty2);
+    	Wire.write(setProperty2);
 	Wire.write(StMoSNRProperty);
 	Wire.write(SterSNRProperty1);
 	Wire.write(SterSNRProperty2);
 	Wire.write(StereoSNR);
-    Wire.endTransmission();
-    delay(10);
+    	Wire.endTransmission();
+    	delay(10);
    
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
-    Wire.write(setProperty2);
+   	Wire.write(setProperty2);
 	Wire.write(StMoSNRProperty);
 	Wire.write(MonoSNRProperty1);
 	Wire.write(MonoSNRProperty2);
 	Wire.write(MonoSNR);
 	Wire.endTransmission();
-    delay(10);
+    	delay(10);
 }
 
 /*******************************************************
@@ -405,7 +403,7 @@ void Si4705::decodeRT (void)
       strl=strlen(RTTemp);
       if((RT_decodeProgress==1)&&(strl!=0)&&(RTAdress==0))
       {
-		  for(int Clear=0; Clear<=64; Clear++)RT[Clear]    = 0;
+          for(int Clear=0; Clear<=64; Clear++)RT[Clear]    = 0;
           for(LZE=64;     RTTemp[LZE]<=32; LZE--);
           for(LZA=0;      RTTemp[LZA]<=32; LZA++);
           
@@ -414,7 +412,7 @@ void Si4705::decodeRT (void)
           RT_decodeProgress=0;
           RTflag = true;
       }
-	  if((BLER)&&(RT_decodeProgress==1))RT_decodeProgress=0;
+      if((BLER)&&(RT_decodeProgress==1))RT_decodeProgress=0;
       if(RT_decodeProgress==1)
       {
           RTTemp[RTAdress]   = RDS[ 8];
@@ -442,7 +440,7 @@ void Si4705::decodePTY (void)
   } 
   switch(_PTY)
   {
-	case  0:strcpy(PTY,"nicht Def\0");break;
+    case  0:strcpy(PTY,"nicht Def\0");break;
     case  1:strcpy(PTY,"Nachricht\0");break;
     case  2:strcpy(PTY,"Aktuell  \0");break;
     case  3:strcpy(PTY,"Informat.\0");break;
@@ -450,9 +448,9 @@ void Si4705::decodePTY (void)
     case  5:strcpy(PTY,"Bildung  \0");break;
 	
     case  6:{strcpy(PTY,"H_rspiel \0"); 
-			PTY[1]=char(239);}		break;
+	     PTY[1]=char(239);}      break;
     
-	case  7:strcpy(PTY,"Kultur   \0");break;
+    case  7:strcpy(PTY,"Kultur   \0");break;
     case  8:strcpy(PTY,"Wissensch\0");break;
     case  9:strcpy(PTY,"Wortprogr\0");break;
     case 10:strcpy(PTY,"Pop Musik\0");break;
@@ -461,7 +459,7 @@ void Si4705::decodePTY (void)
     case 13:strcpy(PTY,"L. Klass.\0");break;
     case 14:strcpy(PTY,"Ernst Mus\0");break;
     case 15:strcpy(PTY,"Andere Mu\0");break;
-	case 31:strcpy(PTY,"Alarm    \0");break;
+    case 31:strcpy(PTY,"Alarm    \0");break;
   }
   if(!RDSSynch)strcpy(PTY,"kein PTY  \0");
   if(RDSSynch )PTYflag = true;
