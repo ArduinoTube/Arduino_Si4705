@@ -1,0 +1,83 @@
+#######################################
+# Syntax Coloring Map for Si4705 DSP  #
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)			      #
+#######################################
+
+RDS			 			KEYWORD1
+PICODE		 			KEYWORD1
+PS			 			KEYWORD1
+RT			 			KEYWORD1
+PTY			 			KEYWORD1
+AF						KEYWORD1
+CT			 			KEYWORD1
+TC			 			KEYWORD1
+CLOCK		 			KEYWORD1
+DATE		 			KEYWORD1
+PSflag		 			KEYWORD1
+RTflag		 			KEYWORD1
+PTYflag		 			KEYWORD1
+CTflag		 			KEYWORD1
+RSSi		 			KEYWORD1
+SNR			 			KEYWORD1
+FMSTEREO	 			KEYWORD1
+STBLEND					KEYWORD1
+OFFSET       			KEYWORD1
+CHANNEL					KEYWORD1
+TUNE_CAP				KEYWORD1
+AFC			 			KEYWORD1
+AF_Zaehler   			KEYWORD1
+AF_trying	 			KEYWORD1
+Si4735       			KEYWORD1
+channel      			KEYWORD1
+updateTime				KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)    #
+#######################################
+
+initRadio	 			KEYWORD2
+initFM		 			KEYWORD2
+setFM		 			KEYWORD2
+setSNC		 			KEYWORD2
+setAntenna   			KEYWORD2
+setFMDeemph  			KEYWORD2
+setHiCut_Off 			KEYWORD2
+setChFilter  			KEYWORD2
+audioMute    			KEYWORD2
+resetRadio	 			KEYWORD2
+setVolume	 			KEYWORD2
+readRDS		 			KEYWORD2
+decodePI	 			KEYWORD2
+decodePS	 			KEYWORD2
+decodeRT	 			KEYWORD2
+decodePTY	 			KEYWORD2
+decodeCT	 			KEYWORD2
+decodeTC	 			KEYWORD2
+decodeAF	 			KEYWORD2
+loopAF		 			KEYWORD2
+clearRDS	 			KEYWORD2
+readData	 			KEYWORD2					
+Si4705		 			KEYWORD2
+
+#######################################
+# Constants (LITERAL1)                #
+#######################################
+muteON		 			LITERAL1
+muteOFF		 			LITERAL1
+channelBTM   			LITERAL1
+channelTOP   			LITERAL1
+FMI			 			LITERAL1
+LPI			 			LITERAL1
+HiCutDis_MaxAudioTrans	LITERAL1
+twokHz					LITERAL1
+threekHz				LITERAL1
+fourkHz 				LITERAL1
+fivekHz					LITERAL1
+sixkHz					LITERAL1
+eightkHz				LITERAL1
+elevenkHz				LITERAL1
+EUROPA					LITERAL1
+USA						LITERAL1
