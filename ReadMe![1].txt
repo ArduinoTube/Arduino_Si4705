@@ -45,7 +45,7 @@
 // Bei weiteren Fragen oder Problemen, kommentiert mein YouTube Video!														                          //
 // Ich wünsche euch viel Spaß damit!																						                                            //
 //																															                                                            //
-// Installation: Entpackt den Ordner Si4705Arduino in eure Library (Pfad: C:\Users\UserName\Documents\Arduino\libraries)  	//
+// Installation: Entpackt den Ordner Si4705_Arduino in eure Library (Pfad: C:\Users\UserName\Documents\Arduino\libraries)  	//
 // Falls Ihr eine ältere Versionnoch habt, sichert diesen vorher ab.														                            //
 //																															                                                            //
 // all rights reserved																										                                                  //
