@@ -16,6 +16,7 @@ CT			 			KEYWORD1
 TC			 			KEYWORD1
 CLOCK		 			KEYWORD1
 DATE		 			KEYWORD1
+RDSflag					KEYWORD1
 PSflag		 			KEYWORD1
 RTflag		 			KEYWORD1
 PTYflag		 			KEYWORD1
@@ -30,7 +31,7 @@ TUNE_CAP				KEYWORD1
 AFC			 			KEYWORD1
 AF_Zaehler   			KEYWORD1
 AF_trying	 			KEYWORD1
-Si4735       			KEYWORD1
+Si4705       			KEYWORD1
 channel      			KEYWORD1
 updateTime				KEYWORD1
 
@@ -61,6 +62,14 @@ loopAF		 			KEYWORD2
 clearRDS	 			KEYWORD2
 readData	 			KEYWORD2					
 Si4705		 			KEYWORD2
+forceMono				KEYWORD2
+seekData				KEYWORD2
+seekThreshold			KEYWORD2
+seekStation				KEYWORD2
+seekAuto				KEYWORD2
+seekLimit				KEYWORD2
+seekStep				KEYWORD2
+autoChFilter			KEYWORD2
 
 #######################################
 # Constants (LITERAL1)                #
