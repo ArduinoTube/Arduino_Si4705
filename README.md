@@ -34,7 +34,7 @@
 // Anzeige von Parametern:																									                                                //
 // - aktuell eingestellter Sender:         Radio.CHANNEL																	                                  //
 // - aktuelle Signalstärke:                Radio.RSSi																		                                    //
-// - aktuelle Signalrauschabstand:         Radio.SNR																		                                    //
+// - aktuelle Signalrauschabstand:         Radio.SNR						 					 							                                    //
 // - aktueller Kapazitätswert der Antenne: Radio.TUNE_CAP																	                                  //
 // - aktueller Stereo/Mono Blendwert:      Radio.STBLEND																	                                  //
 // - aktueller Stereo/Mono Empfang:		     Radio.FMSTEREO																                                    //
