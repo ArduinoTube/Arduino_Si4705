@@ -10,7 +10,7 @@
 // Zu den Spezifikationen:																									                                                //
 //																															                                                            //
 // RDS:																														                                                          //
-// - RDS Decodierung								Radio.readRDS();														                                            //					//                                                                                                                          //
+// - RDS Decodierung								Radio.readRDS();														                                            //
 // - Sendername										Radio.decodePS();  Radio.PS	       String	8  Zeichen					                            //
 // - Sendertext										Radio.decodeRT();  Radio.RT	       String	64 Zeichen					                            //
 // - Sendertyp										Radio.decodePTY(); Radio.PTY       String	12 Zeichen					                            //
