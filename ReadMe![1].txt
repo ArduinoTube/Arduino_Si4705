@@ -36,7 +36,7 @@
 // - aktuelle Signalrauschabstand:         Radio.SNR						 			    //
 // - aktueller Kapazitätswert der Antenne: Radio.TUNE_CAP								    //
 // - aktueller Stereo/Mono Blendwert:      Radio.STBLEND								    //
-// - aktueller Stereo/Mono Empfang:		     Radio.FMSTEREO							    //
+// - aktueller Stereo/Mono Empfang:	   Radio.FMSTEREO					        		    //
 // - aktueller Offset Frequenzwert AFC:    Radio.OFFSET									    //
 // - gültiger Sender:                      Radio.AFC&(1<<0) // == 1 Sender gültig oder   == 0 Sender nicht gültig	    //
 // - AFC-Relais Zustand:                   Radio.AFC&(1<<1) // == 2 AFC stimmt nach oder == 0 AFC ist gerade inaktiv	    //
