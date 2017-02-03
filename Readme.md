@@ -29,7 +29,7 @@
 // - Radiofrequenzbereich kann verstellt werden, durch Änderung folgender Werte: 					    //
 //   Radio.channelBTM und Radio.channelTOP (z.B.: Radio.channelBTM = 8700; und Radio.channelTOP = 10400;)		    //
 // - Die I2C Adresse kann auch verstellt werden, je nach SEN Pin: Radio.Si4705_Addr = ...;				    //
-//															    //
+//				       											    //
 // Anzeige von Parametern:												    //
 // - aktuell eingestellter Sender:         Radio.CHANNEL								    //
 // - aktuelle Signalstärke:                Radio.RSSi									    //
