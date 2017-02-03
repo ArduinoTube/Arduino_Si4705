@@ -4,5 +4,7 @@ Achtet darauf, dass diese Library eine menge Speicher benötigt und ich euch zu 
 Board oder noch höher rate.
 
 Version:   1.1-01022017
+
 Ersteller: ArduinoTube
+
 Zu den Spezifikationen:
