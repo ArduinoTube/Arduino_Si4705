@@ -65,11 +65,9 @@ Si4705		 			KEYWORD2
 forceMono				KEYWORD2
 seekData				KEYWORD2
 seekThreshold			KEYWORD2
-seekStation				KEYWORD2
 seekAuto				KEYWORD2
 seekLimit				KEYWORD2
 seekStep				KEYWORD2
-autoChFilter			KEYWORD2
 
 #######################################
 # Constants (LITERAL1)                #
