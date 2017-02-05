@@ -34,13 +34,15 @@ void Si4705::initRadio(int Power, int volume, int resetPin, int intPin, int auxP
 	resetRadio(resetPin);
 	digitalWrite(intPin,HIGH);  
 	initFM();
+	audioMute(muteON);
 	if(Power==FM)
 	{
+	  setAntenna(LPI);
 	  seekLimit(channelTOP, channelBTM);
 	  seekStep(_100kHzSeek);
 	  seekThreshold(seekSNR,seekRSSI);
 	  setFMDeemph(Deemphasis);
-	  setChFilter(ChFilter40);
+	  setChFilter(ChFilterAuto);
 	  setHiCut_Off(HiCutDis_MaxAudioTrans,_6kHz,SNRHighThreshold,SNRLowThreshold);
 	  setSNC(StereoRSSIThrold,MonoRSSIThrold,StereoSNRThrhold,MonoSNRThrhold);
 	  delay(500);
@@ -54,6 +56,8 @@ void Si4705::initRadio(int Power, int volume, int resetPin, int intPin, int auxP
 	  digitalWrite(auxPin,HIGH);
 	  audioMute(muteOFF);
 	}
+	else digitalWrite(intPin,LOW); 
+	
 }
 
 /*******************************************************
@@ -67,14 +71,7 @@ void Si4705::audioMute(uint8_t OnOff)
 	if(OnOff==0)Wire.write(AudioMuteDs);
 	if(OnOff!=0)Wire.write(AudioMuteEn);
 	Wire.endTransmission();
-	delay(10);
-
-	//Set GPIO1 as Output
-	Wire.beginTransmission(Si4705_Addr);
-	Wire.write(GPIO1Conf1);
-	Wire.write(GPIO1Conf2);
-	Wire.endTransmission();
-	delay(10);
+	delay(20);
 }
 
 /*******************************************************
@@ -82,6 +79,7 @@ void Si4705::audioMute(uint8_t OnOff)
 *******************************************************/
 void Si4705::setChFilter (int channelFilter_)
 {
+	audioMute(muteON);
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
 	Wire.write(setProperty2);	
@@ -90,19 +88,9 @@ void Si4705::setChFilter (int channelFilter_)
 	Wire.write(channelFilter_ >> 8);
 	Wire.write(channelFilter_&0xFF);
 	Wire.endTransmission();
-	delay(10);
+	delay(40);
+	audioMute(muteOFF);
 	channelFilter=channelFilter_;
-}
-
-void Si4705::autoChFilter (void)
-{
-  if((SNR <   8)&&(channelFilter==ChFilter60))			 	setChFilter(ChFilter40);
-  if((SNR <  10)&&(channelFilter==ChFilter84))			 	setChFilter(ChFilter60);
-  if((SNR <  12)&&(channelFilter==ChFilter110))			 	setChFilter(ChFilter84);
-  
-  if((SNR >  14)&&(channelFilter==ChFilter40))				setChFilter(ChFilter60);
-  if((SNR >  18)&&(channelFilter==ChFilter60))				setChFilter(ChFilter84);
-  if((SNR >  22)&&(channelFilter==ChFilter84))				setChFilter(ChFilter110);
 }
 
 /*******************************************************
@@ -208,6 +196,12 @@ void Si4705::initFM (void)
     Wire.write(RDS_BLER2);
     Wire.endTransmission();
     delay(10);
+	
+	Wire.beginTransmission(Si4705_Addr);
+	Wire.write(GPIO1Conf1);
+	Wire.write(GPIO1Conf2);
+	Wire.endTransmission();
+	delay(20);
 
 }
 
@@ -309,7 +303,6 @@ void Si4705::setFM (unsigned int FMchannel)
 { 
    if(FMchannel>channelTOP)FMchannel=channelBTM;
    if(FMchannel<channelBTM)FMchannel=channelTOP;
-   if(channelFilter!=ChFilter40)setChFilter(ChFilter40);
    Wire.beginTransmission(Si4705_Addr);
    Wire.write(setFMchannel1);
    Wire.write(setFMchannel2);
@@ -327,28 +320,6 @@ void Si4705::forceMono (int forceMono)
 {
 	if(forceMono==true) setSNC(127,126,127,126);
 	if(forceMono==false)setSNC(StereoRSSIThrold,MonoRSSIThrold,StereoSNRThrhold,MonoSNRThrhold);
-}
-
-/*******************************************************
-*-------------------FM Sendersuchlauf------------------* 
-********************************************************/
-void Si4705::seekStation (int Direction, unsigned int &channel)
-{
-	audioMute(muteON);
-    clearRDS();
-	int seekStation = true;
-	int oldStation  = channel;
-    while(seekStation == true)
-    {
-      channel += Direction * 10;
-      if (channel > 10800)channel = 8750;
-      if (channel < 8750) channel = 10800;
-      setFM(channel);
-	  delay(110);seekData();
-      if((AFC&(1<<0))||(oldStation == channel))
-	  seekStation = false;
-    }
-    audioMute(muteOFF);	
 }
 
 /*******************************************************
