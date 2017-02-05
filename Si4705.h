@@ -119,8 +119,8 @@ class Si4705
   const unsigned int MonoRSSIThrold    	= 15;
   const unsigned int StereoSNRThrhold  	= 20;
   const unsigned int MonoSNRThrhold    	= 10;
-  const unsigned int seekSNR			=  1;
-  const unsigned int seekRSSI		  	=  1;
+  const unsigned int seekSNR			=  4;
+  const unsigned int seekRSSI		  	=  6;
   const int Deemphasis 		  			= EUROPA;
 
   //::-------------RDS-------------:://
