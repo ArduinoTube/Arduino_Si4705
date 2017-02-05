@@ -23,6 +23,12 @@ class Si4705
   const unsigned int 	channelTOP 	 = 10800;
   volatile int 			updateTime   = false;
   int 					Si4705_Addr  = 0xC6 >> 1;
+  unsigned  channelFilter     			=  0;
+  
+  enum channelFilterState {ChFilterAuto, ChFilter110, ChFilter84, ChFilter60, ChFilter40};
+  const int _50kHzSeek  = 5;
+  const int _100kHzSeek = 10;
+  const int _200kHzSeek = 20;
   
   enum muteState  {muteOFF, muteON};
   enum antState	  {FMI, LPI};
@@ -50,13 +56,11 @@ class Si4705
   void setAntenna  	(int FM_ANTENNA);
   void setFMDeemph 	(int Deemphasis);
   void setHiCut_Off	(int maxFreq, int Freq, int SNRHigh, int SNRLow);
-  void autoChFilter	(void);
   void setChFilter 	(int channelFilter);
   void setFM       	(unsigned int FMchannel);
   void setSNC      	(int StereoTreshold, int MonoTreshold, int StereoSNR, int MonoSNR);
   void forceMono    (int forceMono);
   void seekThreshold(int seekSNR, int seekRSSI);
-  void seekStation	(int Direction, unsigned int &channel);
   void seekAuto 	(int Direction, unsigned int &channel);
   void seekLimit	(unsigned int seekTop, unsigned int seekBottom);
   void seekStep		(int seekStep);
@@ -114,16 +118,10 @@ class Si4705
   const unsigned int StereoRSSIThrold  	= 22;
   const unsigned int MonoRSSIThrold    	= 15;
   const unsigned int StereoSNRThrhold  	= 20;
-  const unsigned int MonoSNRThrhold    	= 14;
+  const unsigned int MonoSNRThrhold    	= 10;
   const unsigned int seekSNR			=  1;
   const unsigned int seekRSSI		  	=  1;
   const int Deemphasis 		  			= EUROPA;
-  unsigned  channelFilter     			=  0;
-  
-  enum channelFilterState {ChFilterAuto, ChFilter110, ChFilter84, ChFilter60, ChFilter40};
-  const int _50kHzSeek  = 5;
-  const int _100kHzSeek = 10;
-  const int _200kHzSeek = 20;
 
   //::-------------RDS-------------:://
   char 		   PSTemp[10];
