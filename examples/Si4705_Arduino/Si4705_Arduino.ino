@@ -93,7 +93,6 @@ void loop()
 				  Radio_tuneFavourite(ch);
   }
   Radio_loopRDS();
-  if(second()%5==0)Radio.autoChFilter();
 }
 
 void Radio_loopRDS (void)
