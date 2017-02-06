@@ -115,10 +115,10 @@ class Si4705
   const unsigned int RDSFifo		   	= 0x01;
   const unsigned int SNRHighThreshold  	= 11;
   const unsigned int SNRLowThreshold   	=  2;
-  const unsigned int StereoRSSIThrold  	= 39;
-  const unsigned int MonoRSSIThrold    	= 22;
-  const unsigned int StereoSNRThrhold  	= 33;
-  const unsigned int MonoSNRThrhold    	= 21;
+  const unsigned int StereoRSSIThrold  	= 41;
+  const unsigned int MonoRSSIThrold    	= 25;
+  const unsigned int StereoSNRThrhold  	= 39;
+  const unsigned int MonoSNRThrhold    	= 26;
   const unsigned int seekSNR			=  6;
   const unsigned int seekRSSI		  	=  4;
   const int Deemphasis 		  			= EUROPA;
