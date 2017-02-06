@@ -113,12 +113,12 @@ class Si4705
   const unsigned int  QuarzFreq1		= 0x80; //MSB --> 32768 Hz
   const unsigned int  QuarzFreq2		= 0x00; //LSB --> 32768 Hz 
   const unsigned int RDSFifo		   	= 0x01;
-  const unsigned int SNRHighThreshold  	= 11;
+  const unsigned int SNRHighThreshold  	= 12;
   const unsigned int SNRLowThreshold   	=  2;
-  const unsigned int StereoRSSIThrold  	= 41;
-  const unsigned int MonoRSSIThrold    	= 25;
-  const unsigned int StereoSNRThrhold  	= 39;
-  const unsigned int MonoSNRThrhold    	= 26;
+  const unsigned int StereoRSSIThrold  	= 30;
+  const unsigned int MonoRSSIThrold    	= 10;
+  const unsigned int StereoSNRThrhold  	= 40;
+  const unsigned int MonoSNRThrhold    	= 14;
   const unsigned int seekSNR			=  6;
   const unsigned int seekRSSI		  	=  4;
   const int Deemphasis 		  			= EUROPA;
