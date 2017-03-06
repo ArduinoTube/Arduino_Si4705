@@ -334,10 +334,26 @@ void Si4705::seekAuto (int Direction, unsigned int &channel)
 	if(Direction<0)Wire.write(seekDownCmd);
 	Wire.endTransmission();
     delay(1000);
-	while(!AFC){seekData();delay(500);}
+	while(AFC&(1<<0)){seekData();delay(500);}
 	delay(500);
 	seekData();
 	channel = CHANNEL;
+}
+
+/*******************************************************
+*----------------FM Sendersuchlauf Si4735--------------* 
+********************************************************/
+void Si4705::seekStation (int Direction, unsigned int &channel)
+{
+	int seekStation = true;
+    clearRDS(); 
+	while(seekStation==true)
+	{
+	   channel+=(Direction);
+	   setFM(channel);
+	   seekData();
+	   if(AFC&(1<<0))seekStation=false;
+	}
 }
 
 /*******************************************************
