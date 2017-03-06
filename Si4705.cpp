@@ -333,8 +333,8 @@ void Si4705::seekAuto (int Direction, unsigned int &channel)
 	if(Direction>0)Wire.write(seekUpCmd);
 	if(Direction<0)Wire.write(seekDownCmd);
 	Wire.endTransmission();
-    delay(1000);
-	while(AFC&(1<<0)){seekData();delay(500);}
+    delay(120);
+	while((AFC&(1<<0))&&(AFC&(1<<1)==0)){seekData();delay(500);}
 	delay(500);
 	seekData();
 	channel = CHANNEL;
