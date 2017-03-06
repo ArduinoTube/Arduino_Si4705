@@ -332,15 +332,10 @@ void Si4705::seekAuto (int Direction, unsigned int &channel)
     Wire.write(seekStationCmd);
 	if(Direction>0)Wire.write(seekUpCmd);
 	if(Direction<0)Wire.write(seekDownCmd);
-	Wire.endTransmission();
-    delay(120);
-	while((AFC&(1<<0))&&(AFC&(1<<1)==0)){seekData();delay(500);}
-	delay(500);
-	seekData();
-	while((AFC&(1<<0))&&(AFC&(1<<1)==0)){seekData();delay(500);}
+	Wire.endTransmission();AFC=0;delay(250);
+	while((AFC&(1<<0))==0){seekData();delay(200);}
 	channel = CHANNEL;
 }
-
 
 /*******************************************************
 *Set Stereo/Mono Threshold fuer SNC abh. von RSSI / SNR*
@@ -780,7 +775,8 @@ void Si4705::seekData (void)
   SNR       = Data[5]; 
   CHANNEL   = Data[2] << 8;
   CHANNEL  += Data[3]&0xFF;
-  AFC       = Data[0];
+  AFC       = Data[1];
+  STC       = Data[0]&0x01;
   TUNE_CAP  = Data[7];
   delay(5);
 }
@@ -797,7 +793,8 @@ void Si4705::readData (void)
   for(int Times=0; ((Times<8)&&(Wire.available())); Times++)
   Data[Times] = Wire.read();
   RSSi      = Data[4];
-  SNR       = Data[5];  
+  SNR       = Data[5]; 
+  AFC       = Data[2];  
   FMSTEREO  = Data[3]>>7;
   STBLEND   = Data[3]&0x7F;
   OFFSET    = Data[7];
