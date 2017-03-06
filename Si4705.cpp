@@ -39,7 +39,7 @@ void Si4705::initRadio(int Power, int volume, int resetPin, int intPin, int auxP
 	{
 	  setAntenna(LPI);
 	  seekLimit(channelTOP, channelBTM);
-	  seekStep(_100kHzSeek);
+	  seekStep(_50kHzSeek);
 	  seekThreshold(seekSNR,seekRSSI);
 	  setFMDeemph(Deemphasis);
 	  setChFilter(ChFilterAuto);
@@ -318,7 +318,7 @@ void Si4705::setFM (unsigned int FMchannel)
 ********************************************************/
 void Si4705::forceMono (int forceMono)
 {
-	if(forceMono==true) setSNC(127,126,127,126);
+	if(forceMono==true) setSNC(127,127,127,127);
 	if(forceMono==false)setSNC(StereoRSSIThrold,MonoRSSIThrold,StereoSNRThrhold,MonoSNRThrhold);
 }
 
@@ -327,18 +327,15 @@ void Si4705::forceMono (int forceMono)
 ********************************************************/
 void Si4705::seekAuto (int Direction, unsigned int &channel)
 {
-	AFC = 0;
-	audioMute(muteON);
     clearRDS(); 
     Wire.beginTransmission(Si4705_Addr);
     Wire.write(seekStationCmd);
 	if(Direction>0)Wire.write(seekUpCmd);
 	if(Direction<0)Wire.write(seekDownCmd);
 	Wire.endTransmission();
-    delay(10);
-	while(!AFC){seekData();delay(200);}
-	audioMute(muteOFF);
-	delay(1000);
+    delay(1000);
+	while(!AFC){seekData();delay(500);}
+	delay(500);
 	seekData();
 	channel = CHANNEL;
 }
@@ -781,7 +778,7 @@ void Si4705::seekData (void)
   SNR       = Data[5]; 
   CHANNEL   = Data[2] << 8;
   CHANNEL  += Data[3]&0xFF;
-  AFC       = Data[1];
+  AFC       = Data[0];
   TUNE_CAP  = Data[7];
   delay(5);
 }
