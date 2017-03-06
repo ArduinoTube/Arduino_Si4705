@@ -337,6 +337,7 @@ void Si4705::seekAuto (int Direction, unsigned int &channel)
 	while((AFC&(1<<0))&&(AFC&(1<<1)==0)){seekData();delay(500);}
 	delay(500);
 	seekData();
+	while((AFC&(1<<0))&&(AFC&(1<<1)==0)){seekData();delay(500);}
 	channel = CHANNEL;
 }
 
