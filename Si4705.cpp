@@ -4,13 +4,14 @@
 
 /*
 Si4705 Bibliothek
-Version:   1.1-01022017
+Version:   1.2-06032017
 Ersteller: ArduinoTube
 
 ###########################FM Radio###########################
 :: Empfang von 87.50 MHz bis 108.00 MHz                     ::
 :: Volle RDS unterstützung (PS,PTY,RT,CT,AF)                ::
 :: Signalstärke und -rauschabstand können ausgelesen werden ::
+:: Automatischer Sendersuchlauf korrigiert; Bug behoben	    ::
 :: ...                                                      ::
 **************************************************************
 */
