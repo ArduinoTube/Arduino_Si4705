@@ -93,6 +93,7 @@ void loop()
 				  Radio_tuneFavourite(ch);
   }
   Radio_loopRDS();
+  Radio_autoChFilter();
 }
 
 void Radio_loopRDS (void)
