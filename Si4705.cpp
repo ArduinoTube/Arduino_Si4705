@@ -4,14 +4,13 @@
 
 /*
 Si4705 Bibliothek
-Version:   1.2-06032017
+Version:   1.1-01022017
 Ersteller: ArduinoTube
 
 ###########################FM Radio###########################
 :: Empfang von 87.50 MHz bis 108.00 MHz                     ::
 :: Volle RDS unterstützung (PS,PTY,RT,CT,AF)                ::
 :: Signalstärke und -rauschabstand können ausgelesen werden ::
-:: Automatischer Sendersuchlauf korrigiert; Bug behoben	    ::
 :: ...                                                      ::
 **************************************************************
 */
@@ -80,7 +79,7 @@ void Si4705::audioMute(uint8_t OnOff)
 *******************************************************/
 void Si4705::setChFilter (int channelFilter_)
 {
-	audioMute(muteON);
+	// audioMute(muteON);
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
 	Wire.write(setProperty2);	
@@ -89,9 +88,26 @@ void Si4705::setChFilter (int channelFilter_)
 	Wire.write(channelFilter_ >> 8);
 	Wire.write(channelFilter_&0xFF);
 	Wire.endTransmission();
-	delay(40);
-	audioMute(muteOFF);
-	channelFilter=channelFilter_;
+	delay(20);
+	// audioMute(muteOFF);
+}
+
+void Si4705::autoChFilter (void)
+{
+	int absOffset = abs(OFFSET);
+	if(SNR > 16)  	channelFilter= ChFilter60;
+	if(SNR > 20)  	channelFilter= ChFilter84;
+	if(SNR > 24)  	channelFilter= ChFilter110;
+		
+	if(SNR < 14)  	channelFilter= ChFilter84;
+	if(SNR < 12)  	channelFilter= ChFilter60;
+	if(SNR < 10)  	channelFilter= ChFilter40;
+	if(absOffset>20)channelFilter= ChFilter40;
+	if(oldchannelFilter != channelFilter)
+	{
+		oldchannelFilter = channelFilter;
+		setChFilter(channelFilter);
+	}
 }
 
 /*******************************************************
@@ -706,7 +722,7 @@ void Si4705::loopAF (unsigned int &channel)
 				readRDS();
 				decodePI();
 				if((PICODE[0])&&(PICODE[1]))break;
-				if((countRDS>10)&&((SNR<14)||(OFFSET>50)))break;
+				if((countRDS>2)&&((SNR<14)||(OFFSET>20)))break;
 			}
 			
 			if(AF_PICODE[1]==PICODE[1])
