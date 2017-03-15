@@ -1,6 +1,49 @@
 #include "Arduino.h"
 #include <stdio.h>
 #include <stdlib.h>
+#define PGMSTR(x) (__FlashStringHelper*)(x)
+
+const char PTY_0 []  PROGMEM  = { "Not defined Type\0" };
+const char PTY_1 []  PROGMEM  = { "News            \0" };
+const char PTY_2 []  PROGMEM  = { "Current Affairs \0" };
+const char PTY_3 []  PROGMEM  = { "Information     \0" };
+const char PTY_4 []  PROGMEM  = { "Sport           \0" };
+const char PTY_5 []  PROGMEM  = { "Education       \0" };
+const char PTY_6 []  PROGMEM  = { "Drama           \0" };
+const char PTY_7 []  PROGMEM  = { "Culture         \0" };
+const char PTY_8 []  PROGMEM  = { "Science         \0" };
+const char PTY_9 []  PROGMEM  = { "Wortprogramm    \0" };
+const char PTY_10[]  PROGMEM  = { "Popular Music   \0" };
+const char PTY_11[]  PROGMEM  = { "Rock Music      \0" };
+const char PTY_12[]  PROGMEM  = { "Easy Listening  \0" };
+const char PTY_13[]  PROGMEM  = { "Light Classical \0" };
+const char PTY_14[]  PROGMEM  = { "Serious Classic \0" };
+const char PTY_15[]  PROGMEM  = { "Other Music     \0" };
+const char PTY_16[]  PROGMEM  = { "Weather         \0" };
+const char PTY_17[]  PROGMEM  = { "Finance         \0" };
+const char PTY_18[]  PROGMEM  = { "Children's Progr\0" };
+const char PTY_19[]  PROGMEM  = { "Social Affairs  \0" };
+const char PTY_20[]  PROGMEM  = { "Religious Talk  \0" };
+const char PTY_21[]  PROGMEM  = { "Phone-in        \0" };
+const char PTY_22[]  PROGMEM  = { "Travel / Public \0" };
+const char PTY_23[]  PROGMEM  = { "Leisure         \0" };
+const char PTY_24[]  PROGMEM  = { "Jazz Music	   \0" };
+const char PTY_25[]  PROGMEM  = { "Country Music   \0" };
+const char PTY_26[]  PROGMEM  = { "National Music  \0" };
+const char PTY_27[]  PROGMEM  = { "Oldies Music    \0" };
+const char PTY_28[]  PROGMEM  = { "Folk Music      \0" };
+const char PTY_29[]  PROGMEM  = { "Documentary     \0" };
+const char PTY_30[]  PROGMEM  = { "Alarm Test!!    \0" };
+const char PTY_31[]  PROGMEM  = { "Alarm           \0" };
+const char* const string_table[] PROGMEM = {
+PTY_0,  PTY_1,  PTY_2,  PTY_3, 
+PTY_4,  PTY_5,  PTY_6,  PTY_7, 
+PTY_8,  PTY_9,  PTY_10, PTY_11, 
+PTY_12, PTY_13, PTY_14, PTY_15, 
+PTY_16, PTY_17, PTY_18, PTY_19, 
+PTY_20, PTY_21, PTY_22, PTY_23, 
+PTY_24, PTY_25, PTY_26, PTY_27, 
+PTY_28, PTY_29, PTY_30, PTY_31};
 
 class Si4705
 {
@@ -71,6 +114,7 @@ class Si4705
   void seekStep		(int seekStep);
   void resetRadio  	(int _resetPin);
   void setVolume   	(int volume);
+  char* fStr		(const char* str);
   void readRDS     	(void);
   void decodePI    	(void);
   void decodePS    	(void);
