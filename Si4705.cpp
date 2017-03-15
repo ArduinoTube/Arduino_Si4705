@@ -95,14 +95,14 @@ void Si4705::setChFilter (int channelFilter_)
 void Si4705::autoChFilter (void)
 {
 	int absOffset = abs(OFFSET);
-	if(SNR > 19)  	channelFilter= ChFilter60;
-	if(SNR > 22)  	channelFilter= ChFilter84;
-	if(SNR > 25)  	channelFilter= ChFilter110;
+	if((SNR > 18)&&(RSSi>24))  	channelFilter = ChFilter60;
+	if((SNR > 23)&&(RSSi>29))  	channelFilter = ChFilter84;
+	if((SNR > 30)&&(RSSi>35))  	channelFilter = ChFilter110;
 		
-	if(SNR < 16)  	channelFilter= ChFilter84;
-	if(SNR < 14)  	channelFilter= ChFilter60;
-	if(SNR < 12)  	channelFilter= ChFilter40;
-	if(absOffset>20)channelFilter= ChFilter40;
+	if(SNR < 12)  	channelFilter = ChFilter84;
+	if(SNR <  9)  	channelFilter = ChFilter60;
+	if(SNR <  6)  	channelFilter = ChFilter40;
+	if(absOffset>20)channelFilter = ChFilter40;
 	if(oldchannelFilter != channelFilter)
 	{
 		oldchannelFilter = channelFilter;
@@ -607,6 +607,7 @@ void Si4705::decodeCT (void)
 	if(_STD>=24){_STD-=24;_MJD+=1;}
 	_Stunden=_STD;
 	_Utcoffsetdate=_Utcoffset;
+	Timezone=_Utcoffsetdate-1;
 	_MJD=(((RDS[CH]<<7)+(RDS[CL]>>1)+((RDS[BL]&0b11)<<15)));
 	if((_STD!=32)&&(_Minuten!=32)&&((_Stunden!=0)||(_Minuten!=0)))
 	{
@@ -756,7 +757,6 @@ void Si4705::clearRDS (void)
   RDSflag = false;
   CTflag  = false;
   updateTime   = false;
-  strcpy(PTY,"kein PTY  \0");
   AF_trying = 0;
   _PTY=_PTY1=_PTY2=0;
   AF_PICODE[0]=AF_PICODE[1]=0;
