@@ -551,34 +551,22 @@ void Si4705::decodePTY (void)
     _PTY1 = ((RDS[7]&0xE0)>>5);
     _PTY2 = (((RDS[6]&0x3))<<3);
     _PTY = _PTY1+_PTY2;
-  } 
-  switch(_PTY)
-  {
-	case  0:strcpy(PTY,"unb. Format \0");break;
-    case  1:strcpy(PTY,"Nachrichten \0");break;
-    case  2:strcpy(PTY,"Aktuelles   \0");break;
-    case  3:strcpy(PTY,"Information \0");break;
-    case  4:strcpy(PTY,"Sport       \0");break;
-    case  5:strcpy(PTY,"Bildung     \0");break;
-	
-    case  6:{strcpy(PTY,"H_rspiel   \0"); 
-			PTY[1]=char(239);}		break;
-    
-	case  7:strcpy(PTY,"Kultur      \0");break;
-    case  8:strcpy(PTY,"Wissenschaft\0");break;
-    case  9:strcpy(PTY,"Wortprogramm\0");break;
-    case 10:strcpy(PTY,"Pop Musik   \0");break;
-    case 11:strcpy(PTY,"Rock Musik  \0");break;
-    case 12:strcpy(PTY,"Easy Listen.\0");break;
-    case 13:strcpy(PTY,"Light Class.\0");break;
-    case 14:strcpy(PTY,"Ernste Musik\0");break;
-    case 15:strcpy(PTY,"Andere Musik\0");break;
-	case 31:strcpy(PTY,"Alarm       \0");break;
   }
-  if(!RDSSynch)strcpy(PTY,"Sendertyp nV\0");
+  strcpy_P(PTY, (char*)pgm_read_word(&(string_table[_PTY])));
+  if(!RDSSynch)strcpy(PTY,"< Programm Typ >\0");
   if(RDSSynch )PTYflag = true;
   else         PTYflag = false;
 }
+
+//### Flash String Conversion #################################################
+#define MAX_STRING 60
+char* Si4705::fStr(const char* str) // Return Ram bufferd String
+{
+  char stringBuffer[MAX_STRING+1];
+  strcpy_P(stringBuffer, (char*)str);
+  return stringBuffer;
+}
+//*****************************************************************************
 
 /*******************************************************
 *------------Decodiere RDS-Uhrzeit und Datum-----------* 
