@@ -74,14 +74,14 @@ void loop()
   if (Serial.available())
   {
     char ch = Serial.read();
-    if (ch == 'A'){Radio.setAntenna(Radio.FMI);Serial.println("\nHeadphone Antenna activated!\n");}
-    if (ch == 'a'){Radio.setAntenna(Radio.LPI);Serial.println("\nLoop Antenna activated!\n");}
+    if (ch == 'A'){Radio.setAntenna(Radio.FMI);Serial.println(F("\nHeadphone Antenna activated!\n"));}
+    if (ch == 'a'){Radio.setAntenna(Radio.LPI);Serial.println(F("\nLoop Antenna activated!\n"));}
     if (ch == 'u')Radio_tuneStation( UP );
     if (ch == 'd')Radio_tuneStation(DOWN);
 	  if (ch == 'w')Radio_seekStation( UP );
 	  if (ch == 'q')Radio_seekStation(DOWN);
-	  if (ch == 's'){Radio.forceMono(false);Serial.println("Stereo");}
-	  if (ch == 'm'){Radio.forceMono(true);Serial.println("Mono");}
+	  if (ch == 's'){Radio.forceMono(false);Serial.println(F("Stereo"));}
+	  if (ch == 'm'){Radio.forceMono(true);Serial.println(F("Mono"));}
     if (ch == 't')Radio_seekAF();
     if (ch == 'f')Radio_tuneFrequency();
     if (ch == 'i')Serial_printData(Band);
@@ -93,7 +93,7 @@ void loop()
 				  Radio_tuneFavourite(ch);
   }
   Radio_loopRDS();
-  Radio_autoChFilter();
+  if(second()%5==0)Radio.autoChFilter();
 }
 
 void Radio_loopRDS (void)
@@ -110,19 +110,19 @@ void Radio_loopRDS (void)
     Radio.decodePI();
     if(Radio.PSflag==true)
     {
-      Serial.print("\nPS:");
+      Serial.print(F("\nPS:"));
       Serial.print(Radio.PS);
-      Serial.print(" | ");
+      Serial.print(F(" | "));
       Serial.print(Radio.PTY);
       sprintf(Buffer,"%02X%02X\0",Radio.PICODE[0],Radio.PICODE[1]);
-      Serial.print("\nPI: ");
+      Serial.print(F("\nPI: "));
       Serial.println(Buffer);
       Radio.PSflag=false;
       
     }
     if(Radio.RTflag==true)
     {
-      Serial.print("RT:");
+      Serial.print(F("RT:"));
       Serial.println(Radio.RT);    
       Radio.RTflag=false;
     }
@@ -151,7 +151,7 @@ void Radio_tuneFavourite (char ch)
 void Radio_listFavourite (void)
 {
   char Buffer[16];
-  Serial.println("\nYour Favourite Stations:\n");
+  Serial.println(F("\nYour Favourite Stations:\n"));
   for(int ls = 0; ls <= 9; ls++)
   {
     unsigned lsStation;
@@ -163,7 +163,7 @@ void Radio_listFavourite (void)
 
 void Radio_setFavourite (void)
 {
-  Serial.println("\nSet your Favourite Number between 0...9\n");
+  Serial.println(F("\nSet your Favourite Number between 0...9\n"));
   while(Serial.available()==0);
   while(Serial.available())
   {
@@ -171,12 +171,12 @@ void Radio_setFavourite (void)
   	if((Station>=0)&&(Station<=9))
   	{
   	  if(Band==FM)EEMPROM_setFavourite(Station,FMchannel);
-  	  Serial.println("Done!");
+  	  Serial.println(F("Done!"));
   	}
   	else
   	{
-  	  Serial.println("Invalid Station Number!");
-  	  Serial.println("Please Try again!");
+  	  Serial.println(F("Invalid Station Number!"));
+  	  Serial.println(F("Please Try again!"));
   	}
   }
   Serial_printData(Band);
@@ -188,7 +188,7 @@ void Radio_setVolume (int Dir)
   if (volume <= 0) volume = 0;
   if (volume >=30) volume =30;
   Radio.setVolume(volume);
-  Serial.print("\nVolume: ");Serial.print(volume);
+  Serial.print(F("\nVolume: "));Serial.print(volume);
   delay(100);
 //  Serial_printData(Band); 
   EEPROM.write(volumeEEP,volume);
@@ -213,7 +213,7 @@ void Radio_seekStation (signed Dir)
 {
   if (Band == FM)
   {
-    Serial.println("Suchen..");delay(500);
+    Serial.println(F("Suchen.."));delay(500);
     Radio.seekAuto(Dir,FMchannel);
     EEPROM.write(FMchanHIEEP, FMchannel >> 8);
     EEPROM.write(FMchanLOEEP, FMchannel & 0xFF);
@@ -228,13 +228,13 @@ void Radio_seekAF (void)
     Radio.loopAF(FMchannel);
     Serial_printData(Band);
   }
-  else Serial.println("No AF available yet! Please later try again...");
+  else Serial.println(F("No AF available yet! Please later try again..."));
 }
 
 void Radio_tuneFrequency (void)
 {
   unsigned Number=0;
-  Serial.println("\nEnter Frequency: \nFor FM: 10800 --> 108.00 MHz\0");
+  Serial.println(F("\nEnter Frequency: \nFor FM: 10800 --> 108.00 MHz\0"));
   
   while(Number==0)                //Wait For Input...
   if(Serial.available())Number = Serial.parseInt();
@@ -251,7 +251,7 @@ void Radio_tuneFrequency (void)
 	}
     Serial_printData(Band);          
   }
-  else Serial.println("Invalid Frequency!\nPlease Try Again!");  
+  else Serial.println(F("Invalid Frequency!\nPlease Try Again!"));  
 }
 
 void EEPROM_readData (void)
@@ -284,36 +284,36 @@ void EEMPROM_setFavourite (int Station, unsigned channel)
 
 void Serial_printData (int Band)
 {
-  if(Band==FM){Serial.print("\nUKW: ");Serial.print(FMchannel/100.);Serial.println(" MHz");}
+  if(Band==FM){Serial.print(F("\nUKW: "));Serial.print(FMchannel/100.);Serial.println(F(" MHz"));}
   delay(50);
   Radio.readData();
-  if(Radio.FMSTEREO)Serial.println("STEREO");
-  else              Serial.println(" MONO ");
-  Serial.print("RSSI:    ");Serial.print(Radio.RSSi);Serial.println(" dB");
-  Serial.print("SNR:     ");Serial.print(Radio.SNR); Serial.println(" dB");
-  Serial.print("ANT-CAP: ");Serial.print(Radio.TUNE_CAP); Serial.println(" pF");
-  Serial.print("ST-BLND: ");Serial.print(Radio.STBLEND); Serial.println(" %");
-  Serial.print("OFFSET:  ");Serial.print(Radio.OFFSET); Serial.println(" kHz");
+  if(Radio.FMSTEREO)Serial.println(F("STEREO"));
+  else              Serial.println(F(" MONO "));
+  Serial.print(F("RSSI:    "));Serial.print(Radio.RSSi);Serial.println(F(" dB"));
+  Serial.print(F("SNR:     "));Serial.print(Radio.SNR); Serial.println(F(" dB"));
+  Serial.print(F("ANT-CAP: "));Serial.print(Radio.TUNE_CAP); Serial.println(F(" pF"));
+  Serial.print(F("ST-BLND: "));Serial.print(Radio.STBLEND); Serial.println(F(" %"));
+  Serial.print(F("OFFSET:  "));Serial.print(Radio.OFFSET); Serial.println(F(" kHz"));
   
-  if(Radio.AFC==0)Serial.print("valid Channel found!\n");
-  if(Radio.AFC!=0)Serial.print("AFC is tuning now...\n");
+  if(Radio.AFC==0)Serial.print(F("valid Channel found!\n"));
+  if(Radio.AFC!=0)Serial.print(F("AFC is tuning now...\n"));
 }
 
 void Serial_writeBegin (void)
 {
   Serial.begin(9600);
-  Serial.println("Si4705 DSP Radio");
-  Serial.println("COMMAND | FUNCTION");
-  Serial.println("A / a   | Headphone / Wireantenna");
-  Serial.println("+ and - | set Volume up/down");
-  Serial.println("u and d | set Frequency up/down");
-  Serial.println("q and w | seek auto for a next available Station");
-  Serial.println("s and m | switch between stereo and mono reception");
-  Serial.println("t       | tune for a alternative frequency by RDS");
-  Serial.println("f       | Directly Tuning"); 
-  Serial.println("i       | Show any Informations");
-  Serial.println("0...9   | Your Favourite Stations");
-  Serial.println("l       | list all your Favourite Stations");
-  Serial.println("x       | set your Favourite Station");  
-  Serial.println("?       | List Commands and Functions again");  
+  Serial.println(F("Si4705 DSP Radio"));
+  Serial.println(F("COMMAND | FUNCTION"));
+  Serial.println(F("A / a   | Headphone / Wireantenna"));
+  Serial.println(F("+ and - | set Volume up/down"));
+  Serial.println(F("u and d | set Frequency up/down"));
+  Serial.println(F("q and w | seek auto for a next available Station"));
+  Serial.println(F("s and m | switch between stereo and mono reception"));
+  Serial.println(F("t       | tune for a alternative frequency by RDS"));
+  Serial.println(F("f       | Directly Tuning")); 
+  Serial.println(F("i       | Show any Informations"));
+  Serial.println(F("0...9   | Your Favourite Stations"));
+  Serial.println(F("l       | list all your Favourite Stations"));
+  Serial.println(F("x       | set your Favourite Station"));  
+  Serial.println(F("?       | List Commands and Functions again"));  
 }
