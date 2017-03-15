@@ -10,6 +10,7 @@ class Si4705
   volatile int 			FMSTEREO;
   volatile int 			STBLEND;
   volatile int 			AFC;
+  volatile int          STC;
   volatile int 			OFFSET;
   volatile unsigned int CHANNEL;
   volatile int 			TUNE_CAP;
@@ -23,7 +24,8 @@ class Si4705
   const unsigned int 	channelTOP 	 = 10800;
   volatile int 			updateTime   = false;
   int 					Si4705_Addr  = 0xC6 >> 1;
-  unsigned  channelFilter     			=  0;
+  unsigned  channelFilter     		 =  0;
+  unsigned  oldchannelFilter  		 =  5;
   
   enum channelFilterState {ChFilterAuto, ChFilter110, ChFilter84, ChFilter60, ChFilter40};
   const int _50kHzSeek  = 5;
@@ -44,6 +46,7 @@ class Si4705
   char     PTY[16];
   uint16_t CLOCK[5];
   uint16_t DATE[5];
+  uint8_t  Timezone;
   uint8_t  TC;
   uint8_t  AF_Zaehler;
   uint8_t  AF_trying;
@@ -56,6 +59,7 @@ class Si4705
   void setAntenna  	(int FM_ANTENNA);
   void setFMDeemph 	(int Deemphasis);
   void setHiCut_Off	(int maxFreq, int Freq, int SNRHigh, int SNRLow);
+  void autoChFilter (void);
   void setChFilter 	(int channelFilter);
   void setFM       	(unsigned int FMchannel);
   void setSNC      	(int StereoTreshold, int MonoTreshold, int StereoSNR, int MonoSNR);
@@ -113,14 +117,14 @@ class Si4705
   const unsigned int  QuarzFreq1		= 0x80; //MSB --> 32768 Hz
   const unsigned int  QuarzFreq2		= 0x00; //LSB --> 32768 Hz 
   const unsigned int RDSFifo		   	= 0x01;
-  const unsigned int SNRHighThreshold  	= 12;
-  const unsigned int SNRLowThreshold   	=  2;
-  const unsigned int StereoRSSIThrold  	= 30;
-  const unsigned int MonoRSSIThrold    	= 10;
-  const unsigned int StereoSNRThrhold  	= 40;
-  const unsigned int MonoSNRThrhold    	= 12;
-  const unsigned int seekSNR			=  6;
-  const unsigned int seekRSSI		  	=  4;
+  const unsigned int SNRHighThreshold  	= 11;
+  const unsigned int SNRLowThreshold   	=  6;
+  const unsigned int StereoRSSIThrold  	= 35;
+  const unsigned int MonoRSSIThrold    	= 14;
+  const unsigned int StereoSNRThrhold  	= 26;
+  const unsigned int MonoSNRThrhold    	= 11;
+  const unsigned int seekSNR			=  4;
+  const unsigned int seekRSSI		  	=  3;
   const int Deemphasis 		  			= EUROPA;
 
   //::-------------RDS-------------:://
