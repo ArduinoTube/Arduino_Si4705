@@ -34,7 +34,7 @@ void Si4705::initRadio(int Power, int volume, int resetPin, int intPin, int auxP
 	resetRadio(resetPin);
 	digitalWrite(intPin,HIGH);  
 	initFM();
-	audioMute(muteON);
+	 audioMute(muteON);
 	if(Power==FM)
 	{
 	  setAntenna(LPI);
@@ -79,7 +79,7 @@ void Si4705::audioMute(uint8_t OnOff)
 *******************************************************/
 void Si4705::setChFilter (int channelFilter_)
 {
-	// audioMute(muteON);
+	audioMute(muteON);
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
 	Wire.write(setProperty2);	
@@ -88,21 +88,22 @@ void Si4705::setChFilter (int channelFilter_)
 	Wire.write(channelFilter_ >> 8);
 	Wire.write(channelFilter_&0xFF);
 	Wire.endTransmission();
-	delay(20);
-	// audioMute(muteOFF);
+	delay(10);
+	audioMute(muteOFF);
 }
 
 void Si4705::autoChFilter (void)
 {
 	int absOffset = abs(OFFSET);
-	if((SNR > 18)&&(RSSi>24))  	channelFilter = ChFilter60;
-	if((SNR > 23)&&(RSSi>29))  	channelFilter = ChFilter84;
-	if((SNR > 30)&&(RSSi>35))  	channelFilter = ChFilter110;
-		
-	if(SNR < 12)  	channelFilter = ChFilter84;
-	if(SNR <  9)  	channelFilter = ChFilter60;
-	if(SNR <  6)  	channelFilter = ChFilter40;
-	if(absOffset>20)channelFilter = ChFilter40;
+	if((SNR > 20)&&(channelFilter==ChFilter40))  	channelFilter = ChFilter60;
+	if((SNR > 23)&&(channelFilter==ChFilter60))  	channelFilter = ChFilter84;
+	if((SNR > 26)&&(channelFilter==ChFilter84))  	channelFilter = ChFilter110;
+	
+	if((SNR < 24)&&(channelFilter==ChFilter110))	channelFilter = ChFilter84;
+	if((SNR < 20)&&(channelFilter==ChFilter84 ))	channelFilter = ChFilter60;
+	if((SNR < 15)||(absOffset>20))					channelFilter = ChFilter40;	
+
+	
 	if(oldchannelFilter != channelFilter)
 	{
 		oldchannelFilter = channelFilter;
@@ -350,7 +351,7 @@ void Si4705::seekAuto (int Direction, unsigned int &channel)
 	if(Direction>0)Wire.write(seekUpCmd);
 	if(Direction<0)Wire.write(seekDownCmd);
 	Wire.endTransmission();AFC=0;delay(120);
-	while((AFC&(1<<0))==0){seekData();delay(120);}
+	while(((AFC&(1<<0))==0)&&(BLTF==0)){seekData();delay(120);}
 	channel = CHANNEL;
 }
 
@@ -759,6 +760,7 @@ void Si4705::clearRDS (void)
   updateTime   = false;
   AF_trying = 0;
   _PTY=_PTY1=_PTY2=0;
+  strcpy("< Programm Typ >\0",PTY);
   AF_PICODE[0]=AF_PICODE[1]=0;
   oldRTcount=0;
   PICODE[0]=PICODE[1]=0;
@@ -788,6 +790,7 @@ void Si4705::seekData (void)
   Wire.requestFrom(Si4705_Addr, 32);
   for(int Times=0; ((Times<8)&&(Wire.available())); Times++)
   Data[Times] = Wire.read();
+  BLTF      = ((Data[1]&0xFF)>>7);
   RSSi      = Data[4];
   SNR       = Data[5]; 
   CHANNEL   = Data[2] << 8;
