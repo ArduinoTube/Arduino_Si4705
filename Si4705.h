@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #define PGMSTR(x) (__FlashStringHelper*)(x)
 
+//RDS Europe...
+//Link: https://www.electronics-notes.com/articles/audio-video/broadcast-audio/rds-radio-data-system-pty-codes.php
 const char PTY_0 []  PROGMEM  = { "Not defined Type\0" };
 const char PTY_1 []  PROGMEM  = { "News            \0" };
 const char PTY_2 []  PROGMEM  = { "Current Affairs \0" };
@@ -12,7 +14,7 @@ const char PTY_5 []  PROGMEM  = { "Education       \0" };
 const char PTY_6 []  PROGMEM  = { "Drama           \0" };
 const char PTY_7 []  PROGMEM  = { "Culture         \0" };
 const char PTY_8 []  PROGMEM  = { "Science         \0" };
-const char PTY_9 []  PROGMEM  = { "Wortprogramm    \0" };
+const char PTY_9 []  PROGMEM  = { "Varied          \0" };
 const char PTY_10[]  PROGMEM  = { "Popular Music   \0" };
 const char PTY_11[]  PROGMEM  = { "Rock Music      \0" };
 const char PTY_12[]  PROGMEM  = { "Easy Listening  \0" };
