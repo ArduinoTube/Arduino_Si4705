@@ -10,6 +10,7 @@ class Si4705
   volatile int 			FMSTEREO;
   volatile int 			STBLEND;
   volatile int 			AFC;
+  volatile int			BLTF;	
   volatile int          STC;
   volatile int 			OFFSET;
   volatile unsigned int CHANNEL;
@@ -43,7 +44,7 @@ class Si4705
   char 	   PS[10];
   char     RT[70];
   uint16_t PICODE[2];
-  char     PTY[16];
+  char     PTY[18];
   uint16_t CLOCK[5];
   uint16_t DATE[5];
   uint8_t  Timezone;
@@ -120,7 +121,7 @@ class Si4705
   const unsigned int SNRHighThreshold  	= 11;
   const unsigned int SNRLowThreshold   	=  6;
   const unsigned int StereoRSSIThrold  	= 35;
-  const unsigned int MonoRSSIThrold    	= 14;
+  const unsigned int MonoRSSIThrold    	= 12;
   const unsigned int StereoSNRThrhold  	= 26;
   const unsigned int MonoSNRThrhold    	= 11;
   const unsigned int seekSNR			=  4;
