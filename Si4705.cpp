@@ -760,7 +760,7 @@ void Si4705::clearRDS (void)
   updateTime   = false;
   AF_trying = 0;
   _PTY=_PTY1=_PTY2=0;
-  strcpy("< Programm Typ >\0",PTY);
+  strcpy(PTY,"< Programm Typ >\0");
   AF_PICODE[0]=AF_PICODE[1]=0;
   oldRTcount=0;
   PICODE[0]=PICODE[1]=0;
