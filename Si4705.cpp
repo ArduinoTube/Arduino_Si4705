@@ -88,7 +88,7 @@ void Si4705::setChFilter (int channelFilter_)
 	Wire.write(channelFilter_ >> 8);
 	Wire.write(channelFilter_&0xFF);
 	Wire.endTransmission();
-	delay(10);
+	delay(20);
 	audioMute(muteOFF);
 }
 
@@ -546,16 +546,14 @@ void Si4705::decodePTY (void)
 {
   int GroupType = RDS[6]>>4;
   int RDSSynch  = RDS[2]&1;
-  if(GroupType==0)
+  if((GroupType==0)&&(RDSSynch))
   {
     _PTY1 = ((RDS[7]&0xE0)>>5);
     _PTY2 = (((RDS[6]&0x3))<<3);
     _PTY = _PTY1+_PTY2;
+	strcpy_P(PTY, (char*)pgm_read_word(&(string_table[_PTY])));
   }
-  strcpy_P(PTY, (char*)pgm_read_word(&(string_table[_PTY])));
-  if(!RDSSynch)strcpy(PTY,"< Programm Typ >\0");
-  if(RDSSynch )PTYflag = true;
-  else         PTYflag = false;
+  PTYflag = bool(RDSSynch);
 }
 
 //### Flash String Conversion #################################################
