@@ -92,7 +92,7 @@ class Si4705
   char     PTY[18];
   uint16_t CLOCK[5];
   uint16_t DATE[5];
-  uint8_t  Timezone;
+   int8_t  Timezone;
   uint8_t  TC;
   uint8_t  AF_Zaehler;
   uint8_t  AF_trying;
