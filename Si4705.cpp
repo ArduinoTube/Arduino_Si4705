@@ -79,7 +79,6 @@ void Si4705::audioMute(uint8_t OnOff)
 *******************************************************/
 void Si4705::setChFilter (int channelFilter_)
 {
-	audioMute(muteON);
 	Wire.beginTransmission(Si4705_Addr);
 	Wire.write(setProperty1);
 	Wire.write(setProperty2);	
@@ -89,7 +88,6 @@ void Si4705::setChFilter (int channelFilter_)
 	Wire.write(channelFilter_&0xFF);
 	Wire.endTransmission();
 	delay(20);
-	audioMute(muteOFF);
 }
 
 void Si4705::autoChFilter (void)
