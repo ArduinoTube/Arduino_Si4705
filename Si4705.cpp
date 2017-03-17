@@ -455,7 +455,7 @@ void Si4705::decodePI (void)
 {
 	int GroupType = RDS[6]>>4;
 	int RDSSynch  = RDS[2]&1;
-	if((GroupType==0)&&(RDSSynch==1))
+	if((GroupType==0)&&(RDSSynch))
 	{
 		if(RDS[4])PICODE[0]=RDS[4];
 		if(RDS[5])PICODE[1]=RDS[5];
@@ -472,7 +472,7 @@ void Si4705::decodePS (void)
   int GroupType = RDS[6]>>4;
   int PSAdress  = 0;
   int RDSSynch  = RDS[2]&1;
-  if((GroupType==0)&&(RDSSynch==1)&&(PSflag==false))
+  if((GroupType==0)&&(RDSSynch)&&(PSflag==false))
   {
     PSAdress=RDS[7]&3;
     PSAdress*=2;
@@ -500,7 +500,7 @@ void Si4705::decodeRT (void)
   volatile uint8_t LZE       = 0;
   volatile uint8_t strl      = 0;
   volatile uint8_t BLER		 = RDS[12];
-  if((GroupType==2)&&(RT_decodeProgress<2)&&(RDSSynch==1)&&(RTflag==false))
+  if((GroupType==2)&&(RT_decodeProgress<2)&&(RDSSynch==1)&&(RTflag==false)&&(RDSSynch))
   {
       RTAdress=RDS[7]&15;
       RTAdress*=4;
@@ -594,7 +594,7 @@ void Si4705::decodeCT (void)
 	if(_STD>=24){_STD-=24;_MJD+=1;}
 	_Stunden=_STD;
 	_Utcoffsetdate=_Utcoffset;
-	Timezone=_Utcoffsetdate-1;
+	Timezone=_Utcoffsetdate;
 	_MJD=(((RDS[CH]<<7)+(RDS[CL]>>1)+((RDS[BL]&0b11)<<15)));
 	if((_STD!=32)&&(_Minuten!=32)&&((_Stunden!=0)||(_Minuten!=0)))
 	{
@@ -651,7 +651,7 @@ void Si4705::decodeTC (void)
 {
   int GroupType = RDS[6]>>4;
   int RDSSynch  = RDS[2]&1;
-  if(GroupType==0)
+  if((GroupType==0)&&(RDSSynch))
   {
 	  if(((RDS[6]&(1<<2))==0)&&((RDS[7]&(1<<4)))) 		TC=1;	// EON is available
 	  else if(((RDS[6]&(1<<2)))&&((RDS[7]&(1<<4))==0)) 	TC=2;	// TP Signal is available
