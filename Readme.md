@@ -1,8 +1,8 @@
 //******************************************SI4705 FM Radio Bibliothek für Arduino******************************************
 
-// Diese Bibliothek dient zum Ansteuern des Si4705 ELV Radioplatine mit einem Arduino (Mega 2560) und beinhaltet eine       
+// Diese Bibliothek dient zum Ansteuern des Si4705 ELV Radioplatine mit einem Arduino und beinhaltet       
 
-// umfangreiche API, bezüglich der RDS-Datenverarbeitung. Diese wurde meinerseits erstellt und befindet sich noch im Ausbau 
+// verschiedene Funktionen, bezüglich der RDS-Datenverarbeitung. Diese wurde meinerseits erstellt und befindet sich noch im Ausbau 
 
 // Achtet darauf, dass diese Library eine menge Speicher benötigt und ich euch zu einem Arduino Mega                        
 
