@@ -1,4 +1,4 @@
-//******************************************SI4705 FM Radio Bibliothek für Arduino******************************************
+//******************************************SI4705 FM Radio Bibliothek für Arduino******************************************//
 
 // Diese Bibliothek dient zum Ansteuern des Si4705 ELV Radioplatine mit einem Arduino und beinhaltet       
 
